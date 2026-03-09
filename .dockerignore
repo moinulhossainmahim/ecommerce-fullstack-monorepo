@@ -1,0 +1,29 @@
+# Dependencies
+node_modules
+**/node_modules
+
+# Build outputs
+**/dist
+**/.next
+**/.turbo
+
+# Dev artifacts
+**/*.log
+**/.DS_Store
+
+# Git
+**/.git
+**/.gitignore
+
+# Env files (passed via docker-compose environment section)
+**/.env
+
+# Test files
+**/*.spec.ts
+**/*.test.ts
+**/test/
+**/coverage/
+
+# BMAD
+_bmad
+_bmad-output

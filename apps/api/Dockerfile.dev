@@ -1,0 +1,24 @@
+FROM oven/bun:1.2.5-alpine AS base
+
+WORKDIR /app
+
+# Copy workspace manifests first for dependency caching
+# Changes to source code won't invalidate this layer
+COPY package.json bun.lock turbo.json ./
+COPY apps/api/package.json ./apps/api/
+
+# Install all dependencies (including devDeps needed for NestJS CLI + TypeORM CLI)
+# No --frozen-lockfile: bun re-resolves platform-specific binaries on Linux/Alpine
+RUN bun install
+
+# Copy API source code
+COPY apps/api/ ./apps/api/
+
+# Make entrypoint executable
+RUN chmod +x ./apps/api/scripts/docker-start.sh
+
+WORKDIR /app/apps/api
+
+EXPOSE 5001
+
+ENTRYPOINT ["sh", "/app/apps/api/scripts/docker-start.sh"]
