@@ -11,8 +11,8 @@ import { Repository } from 'typeorm';
 import { createHash } from 'crypto';
 import * as bcrypt from 'bcryptjs';
 import { UsersService } from '../users/users.service';
-import { RefreshToken } from '../users/entities/refresh-token.entity';
-import { User } from '../users/entities/user.entity';
+import { RefreshToken } from '../database/entities/refresh-token.entity';
+import { User } from '../database/entities/user.entity';
 import { JwtPayload } from './strategies/jwt.strategy';
 
 @Injectable()

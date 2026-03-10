@@ -1,5 +1,5 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
-import { User } from '../../users/entities/user.entity';
+import { User } from '../../database/entities/user.entity';
 
 // @CurrentUser() injects req.user (set by JwtStrategy.validate) into a route handler param.
 export const CurrentUser = createParamDecorator(
