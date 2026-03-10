@@ -7,13 +7,11 @@ import { getTypeOrmConfig } from './config/typeorm.config';
 
 @Module({
   imports: [
-    // ConfigModule loaded first — everything else depends on env vars
     ConfigModule.forRoot({
-      isGlobal: true, // no need to import ConfigModule in every module
+      isGlobal: true,
       envFilePath: '.env',
     }),
 
-    // TypeORM — configured via env vars
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: getTypeOrmConfig,
