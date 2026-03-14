@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+# Validate commit message format
+bunx @commitlint/cli --edit "$1"
+exit_code=$?
+
+exit $exit_code

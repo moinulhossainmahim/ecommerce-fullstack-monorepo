@@ -1,0 +1,28 @@
+#!/usr/bin/env sh
+set -e
+export FORCE_COLOR=0
+export NO_COLOR=1
+
+# Get all staged files
+STAGED_FILES=$(git diff --cached --name-only)
+
+# Check if any packages (shared) changed
+PACKAGES_CHANGED=$(echo "$STAGED_FILES" | grep -E "^packages/" || true)
+
+if [ -n "$PACKAGES_CHANGED" ]; then
+  # Packages changed: build + check-types + lint for full workspace
+  # (ensures apps still work with shared changes)
+  echo "Packages changed, running build + check-types + lint for full workspace..."
+  bunx turbo run build check-types lint --concurrency=5
+else
+  # Only apps changed: check affected apps
+  STAGED_APPS=$(echo "$STAGED_FILES" | grep "^apps/" | cut -d'/' -f2 | sort -u)
+  if [ -n "$STAGED_APPS" ]; then
+    for app in $STAGED_APPS; do
+      echo "Checking $app..."
+      bunx turbo run check-types lint --filter="$app" --concurrency=5
+    done
+  fi
+fi
+
+bunx lint-staged
