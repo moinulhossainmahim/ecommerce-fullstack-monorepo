@@ -1,3 +1,13 @@
+import HeroSection from "@/components/HeroSection";
+import ProductGrid from "@/components/ProductGrid";
+import StoreFooter from "@/components/StoreFooter";
+
 export default function Home() {
-  return <div>Welcome to the APP!</div>;
+  return (
+    <>
+      <HeroSection />
+      <ProductGrid />
+      <StoreFooter />
+    </>
+  );
 }
